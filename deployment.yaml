@@ -1,32 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-cicd-app
+  name: flask-app
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: my-cicd-app
+      app: flask
   template:
     metadata:
       labels:
-        app: my-cicd-app
+        app: flask
     spec:
       containers:
-      - name: my-cicd-app
-        image: abhishekalavandi/my-cicd-app:latest
+      - name: flask-app
+        image: abhishekalavandi/flask-app:latest
         ports:
         - containerPort: 5000
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: my-cicd-app-service
-spec:
-  selector:
-    app: my-cicd-app
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 5000
-  type: LoadBalancer
