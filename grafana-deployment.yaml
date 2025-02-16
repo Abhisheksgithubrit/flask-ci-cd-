@@ -34,3 +34,4 @@ spec:
       targetPort: 3000  # Grafana runs on port 3000 inside the container
       nodePort: 32500   # Manually defining a NodePort (adjustable if needed)
   type: NodePort
+
