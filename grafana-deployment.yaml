@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+        - name: grafana
+          image: grafana/grafana:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: GF_SECURITY_ADMIN_PASSWORD  # Default Grafana admin password (change for security)
+              value: "admin"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana-service
+spec:
+  selector:
+    app: grafana
+  ports:
+    - protocol: TCP
+      port: 80          # Exposing Grafana on port 80
+      targetPort: 3000  # Grafana runs on port 3000 inside the container
+      nodePort: 32500   # Manually defining a NodePort (adjustable if needed)
+  type: NodePort
